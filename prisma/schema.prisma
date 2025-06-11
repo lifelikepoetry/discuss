@@ -18,8 +18,9 @@ model User {
   // Optional for WebAuthn support
   Authenticator Authenticator[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  topics    Topic[]
   posts     Post[]
   comments  Comment[]
 }
@@ -87,14 +88,22 @@ model Topic {
   description String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  User        User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String?
+  posts       Post[]
 }
 
 model Post {
-  id        String   @id @default(cuid())
+  id        String    @id @default(cuid())
   title     String
   content   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  User      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String?
+  comments  Comment[]
+  Topic     Topic?    @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  topicId   String?
 }
 
 model Comment {
@@ -102,4 +111,10 @@ model Comment {
   content   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  User      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String?
+  Post      Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    String?
+  parent   Comment?
+  children Comment[]
 }
