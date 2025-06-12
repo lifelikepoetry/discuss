@@ -24,46 +24,15 @@ const initialState: FormState = {
     login: true
 };
 
-function SubmitButton({ onClose }: { onClose: () => void }) {
-    const { pending } = useFormStatus();
-    return (
-        <Button
-            color="primary"
-            type="submit"
-            isLoading={pending}
-        >
-            Create
-        </Button>
-    );
-}
-
 export default function CreateTopic() {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const [state, formAction] = useActionState(createTopic, initialState);
+    const [state, formAction, isPending] = useActionState(createTopic, initialState);
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         const formData = new FormData(event.target as HTMLFormElement);
         startTransition(() => formAction(formData));
     }
-
-    const [handled, setHandled] = useState(false);
-
-    useEffect(() => {
-      if (state.message === '创建成功' && isOpen && !handled) {
-        setHandled(true);
-        onOpenChange(); // 关闭
-      }
-    }, [state.message, isOpen, handled]);
-    
-    useEffect(() => {
-      // 弹窗打开时，重置 handled 状态
-      if (isOpen) {
-        setHandled(false);
-      }
-    }, [isOpen]);
-      
-
 
 
     return (
@@ -100,7 +69,13 @@ export default function CreateTopic() {
                                         <Button color="danger" variant="light" onPress={onClose}>
                                             Close
                                         </Button>
-                                        <SubmitButton onClose={onClose} />
+                                        <Button
+                                            color="primary"
+                                            type="submit"
+                                            isLoading={isPending}
+                                        >
+                                            Create
+                                        </Button>
                                     </ModalFooter>
                                 </form>
                             </ModalBody>

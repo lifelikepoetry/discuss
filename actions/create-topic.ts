@@ -1,7 +1,9 @@
 "use server"
 import { auth } from "@/auth";
 import { z } from "zod"
+import { prisma } from "@/prisma";
 import { redirect } from "next/navigation";
+import { Topic } from "@prisma/client";
 
 export type FormState = {
     message: string | null;
@@ -21,7 +23,9 @@ export async function createTopic(
     prevState: FormState,
     formData: FormData
 ): Promise<FormState> {
+    await new Promise(resolve => setTimeout(resolve, 3000));  
     const session = await auth();
+    console.log('session', session);
     if (!session?.user) {
         return {
             message: '请先登录',
@@ -44,20 +48,30 @@ export async function createTopic(
             login: true
         };
     }
-
+    let topic: Topic | null = null;
     try {
         // 这里添加创建话题的逻辑
         console.log('Creating topic:', { name, description });
-        return {
+        topic = await prisma.topic.create({
+            data: {
+                name,
+                description,
+                userId: session.user.id!
+            }
+        })
+        
+/*         return {
             message: '创建成功',
             errors: { name: null, description: null },
             login: true
-        };
+        }; */
     } catch (error) {
         return {
             message: '创建失败',
             errors: { name: null, description: null },
             login: true
-        };
+        };  
     }
+
+    redirect(`/topics/${topic.name}`); 
 }

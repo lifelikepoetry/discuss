@@ -1,5 +1,6 @@
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Input } from "@heroui/react";
-import UserAvatar from "./client/user-avatar";
+import UserAvatar from "./user-avatar";
+import Link from "next/link";
 
 export const AcmeLogo = () => {
     return (
@@ -19,8 +20,10 @@ export default async function NavigationBar() {
     return (
         <Navbar className="border-b border-gray-200">
             <NavbarBrand>
-                <AcmeLogo />
-                <p className="font-bold text-inherit">Discussion Board</p>
+                <Link href="/" className="flex gap-2 items-center">
+                    <AcmeLogo />
+                    <p className="font-bold text-inherit">Discussion Board</p>
+                </Link>
             </NavbarBrand>
             <NavbarContent className="hidden sm:flex gap-4" justify="center">
                 <NavbarItem>

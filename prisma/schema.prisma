@@ -84,13 +84,13 @@ model Authenticator {
 
 model Topic {
   id          String   @id @default(cuid())
-  name        String   @unique
+  name        String
   description String
+  userId      String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  User        User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId      String?
-  posts       Post[]
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post        Post[]
 }
 
 model Post {
@@ -99,25 +99,24 @@ model Post {
   content   String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  User      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String?
   comments  Comment[]
-  Topic     Topic?    @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  topic     Topic?    @relation(fields: [topicId], references: [id], onDelete: Cascade)
   topicId   String?
 }
 
 model Comment {
-  id        String    @id @default(cuid())
-  content   String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  User      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String?
-  Post      Post?     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  postId    String?
-  parent    Comment?  @relation("Comments", fields: [parentId], references: [id])
-  children  Comment[] @relation("Comments")
-  parentId  String?
+  id         String    @id @default(cuid())
+  content    String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  user       User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String?
+  post       Post?     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId     String?
+  parent     Comment?  @relation("Comments", fields: [parentId], references: [id])
+  children   Comment[] @relation("Comments")
+  parentId   String?
   childrenId String?
-
 }

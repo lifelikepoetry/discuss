@@ -1,7 +1,9 @@
-import { Button } from "@heroui/react"
-import CreateTopic from "@/components/client/create-topic"
+import PostList from "@/components/post/post-list"
+import CreateTopic from "@/components/topic/create-topic"
+import TopicList from "@/components/topic/topic-list"
+import { queryPostListAtHomePage } from "@/db/query"
 
-export default function Page() {
+export default async function Page() {
   return (
     <>
     <div className="flex justify-between items-center mb-4">
@@ -9,18 +11,42 @@ export default function Page() {
       <CreateTopic />
     </div>
     <div className="flex">
-        <ul className="flex flex-col gap-4 w-3/4">
-          <li>1</li>
-          <li>2</li>
-          <li>3</li>
-          <li>4</li>
-        </ul>
-
-      <div className="w-1/4 flex flex-col gap-4 items-end">
-        标签区域
-      </div>
+        <div className="w-3/4">
+          <PostList list={await queryPostListAtHomePage()} />
+        </div>
+      <TopicList />
     </div>
+   
 
+    <div className="flex flex-wrap border-2 w-1/2 gap-2 justify-between self-start">
+      <div className="w-8 bg-teal-400 h-5"></div>
+      <div className="w-8 bg-teal-400 h-5"></div>
+      <div className="w-8 bg-teal-400 h-5"></div>
+      <div className="w-8 bg-teal-400 h-5"></div>
+      <div className="w-8 bg-teal-400 h-5"></div>
+      <div className="w-8 bg-teal-400 h-5"></div>
+      <div className="w-8 bg-teal-400 h-5"></div>
+      <div className="w-8 bg-teal-400 h-5"></div>
+      <div className="w-8 bg-teal-400 h-5"></div>
+      <div className="w-8 bg-teal-400 h-5"></div>
+      <div className="w-8 bg-teal-400 h-5"></div>
+      <div className="w-8 bg-teal-400 h-5"></div>
+      <div className="w-8 bg-teal-400 h-5"></div>
+      <div className="w-8 bg-teal-400 h-5"></div>
+      <div className="w-8 bg-teal-400 h-5"></div>
+      <div className="w-8 bg-teal-400 h-5"></div>
+      <div className="w-8 bg-teal-400 h-5"></div>
+      <div className="w-8 bg-teal-400 h-5"></div>
+      <div className="w-8 bg-teal-400 h-5"></div>
+      <div className="w-8 bg-teal-400 h-5"></div>
+      <div className="w-8 bg-teal-400 h-5"></div>
+      <div className="w-8 bg-teal-400 h-5"></div>
+      <div className="w-8 bg-teal-400 h-5"></div>
+      <div className="w-8 bg-teal-400 h-5"></div>
+      <div className="w-8 bg-teal-400 h-5"></div>
+      <div className="w-8 bg-teal-400 h-5"></div>
+
+    </div>
     </>
   )
 }
