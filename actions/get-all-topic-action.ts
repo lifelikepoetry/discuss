@@ -1,13 +1,14 @@
+'use server'
 import { prisma } from "@/prisma";
 import { Topic } from '@prisma/client';
 
-type TopicWithCount = Topic & {
+export type AllTopicWithCount = Topic & {
     _count: {
         post: number;
     };
 };
 
-export const getTopics = async (): Promise<TopicWithCount[]> => {
+export const getAllTopicsAction = async (): Promise<AllTopicWithCount[]> => {
     const topics = await prisma.topic.findMany({
         include: {
             _count: {
@@ -16,12 +17,6 @@ export const getTopics = async (): Promise<TopicWithCount[]> => {
                 }
             }    
         },
-        take: 13,
-        orderBy: {
-            post: {
-                _count: 'desc'
-            }
-        }
     });
-    return topics as unknown as TopicWithCount[];
+    return topics as unknown as AllTopicWithCount[];
 }

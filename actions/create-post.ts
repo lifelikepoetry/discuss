@@ -4,6 +4,7 @@ import { z } from "zod";
 import { prisma } from "@/prisma";
 import { auth } from "@/auth";
 import { Post } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 
 export type PostFormState = {
     message: string | null;
@@ -82,5 +83,8 @@ export async function createPost(prevState: PostFormState, formData: FormData): 
         };
     }
 
-    redirect(`/topics/${formData.get('topicName')}/posts/${post.id}`)
+    // revalidatePath(`/topics/${encodeURIComponent(formData.get('topicName') as string)}`);
+    revalidatePath('/');
+
+    redirect(`/topics/${encodeURIComponent(formData.get('topicName') as string)}/posts/${post.id}`)
 }

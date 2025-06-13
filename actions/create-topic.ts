@@ -4,6 +4,7 @@ import { z } from "zod"
 import { prisma } from "@/prisma";
 import { redirect } from "next/navigation";
 import { Topic } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 
 export type FormState = {
     message: string | null;
@@ -25,7 +26,6 @@ export async function createTopic(
 ): Promise<FormState> {
     await new Promise(resolve => setTimeout(resolve, 3000));  
     const session = await auth();
-    console.log('session', session);
     if (!session?.user) {
         return {
             message: '请先登录',
@@ -51,7 +51,6 @@ export async function createTopic(
     let topic: Topic | null = null;
     try {
         // 这里添加创建话题的逻辑
-        console.log('Creating topic:', { name, description });
         topic = await prisma.topic.create({
             data: {
                 name,
@@ -72,6 +71,8 @@ export async function createTopic(
             login: true
         };  
     }
+    revalidatePath('/');
 
-    redirect(`/topics/${topic.name}`); 
+    redirect(`/topics/${encodeURIComponent(topic.name)}`);
+
 }

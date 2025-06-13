@@ -4,7 +4,8 @@ import { queryPostList } from '@/db/query';
 import React from 'react'
 
 export default async function TopicsPage({ params }: { params: Promise<{ name: string }> }) {
-  const { name } = await params;  // topic name
+  let { name } = await params;  // topic name
+  name = decodeURIComponent(name)
   return (
     <>
       <div className="flex justify-between items-center mb-4">
@@ -17,7 +18,6 @@ export default async function TopicsPage({ params }: { params: Promise<{ name: s
         </div>
 
         <div className="w-1/4 flex flex-col gap-4 items-end">
-          标签区域
         </div>
       </div>
 

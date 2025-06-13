@@ -36,7 +36,6 @@ export async function queryPostList(topicName: string): Promise<PostWithData[]> 
             createdAt: 'desc'
         }
     });
-    console.log("queryPostList", posts);
     return posts as PostWithData[];
 }
 
@@ -63,6 +62,5 @@ export async function queryPostListAtHomePage(): Promise<PostWithData[]> {
             },
           ],
     });
-    console.log("queryPostListAtHomePage", posts);
     return posts as PostWithData[];
 }

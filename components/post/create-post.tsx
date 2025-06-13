@@ -1,5 +1,5 @@
 'use client'
-import { Popover, PopoverTrigger, PopoverContent, Button, Form, Input, Textarea } from "@heroui/react";
+import { Popover, PopoverTrigger, PopoverContent, Button, Input, Textarea } from "@heroui/react";
 import React, { startTransition } from 'react'
 import { useActionState } from "react";
 import { createPost, PostFormState } from "@/actions";
@@ -13,6 +13,7 @@ const initialState: PostFormState = {
 };
 
 export default function CreatePost({ topicName }: { topicName: string }) {
+    console.log('topicName🚀🚀🚀', topicName);
 
     const [state, formAction, isPending] = useActionState(createPost, initialState);
 

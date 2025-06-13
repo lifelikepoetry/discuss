@@ -18,7 +18,7 @@ export default async function Page() {
     </div>
    
 
-    <div className="flex flex-wrap border-2 w-1/2 gap-2 justify-between self-start">
+{/*     <div className="flex flex-wrap border-2 w-1/2 gap-2 justify-between self-start">
       <div className="w-8 bg-teal-400 h-5"></div>
       <div className="w-8 bg-teal-400 h-5"></div>
       <div className="w-8 bg-teal-400 h-5"></div>
@@ -46,7 +46,7 @@ export default async function Page() {
       <div className="w-8 bg-teal-400 h-5"></div>
       <div className="w-8 bg-teal-400 h-5"></div>
 
-    </div>
+    </div> */}
     </>
   )
 }
