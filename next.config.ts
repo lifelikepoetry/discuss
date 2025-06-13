@@ -10,6 +10,11 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  experimental: {
+    serverActions: {
+      allowedOrigins: ["discuss-zeta-five.vercel.app"],
+    },
+  },
 };
 
 export default nextConfig;
